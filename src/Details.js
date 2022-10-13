@@ -1,13 +1,10 @@
 import { Component } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
+import ErrorBoundery from "./ErrorBoundery";
+import ThemeContext from "./ThemeContext";
 
 class Detail extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.state = { loading: true };
-  //   }
-
   state = { loading: true };
 
   async componentDidMount() {
@@ -23,6 +20,10 @@ class Detail extends Component {
       return <h2>loading ...</h2>;
     }
 
+    if (!(this.state.animal || this.state.state)) {
+      throw new Error("lnao you creashed");
+    }
+
     const { animal, breed, city, state, description, name, images } =
       this.state;
     console.log(this.state);
@@ -35,7 +36,11 @@ class Detail extends Component {
           <h2>
             {animal} - {breed} - {city}, {state}
           </h2>
-          <button>Adopt {name}</button>
+          <ThemeContext.Consumer>
+            {([theme]) => (
+              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+            )}
+          </ThemeContext.Consumer>
           <p>{description}</p>
         </div>
       </div>
@@ -45,7 +50,11 @@ class Detail extends Component {
 
 const WrappedDetails = () => {
   const params = useParams();
-  return <Detail params={params} />;
+  return (
+    <ErrorBoundery>
+      <Detail params={params} />
+    </ErrorBoundery>
+  );
 };
 
 export default WrappedDetails;
