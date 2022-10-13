@@ -16,11 +16,12 @@ const SearchParams = () => {
 
   async function requestPets() {
     const res = await fetch(
-      `http://pets-v2.dev-apis.com/pets?animal=${animal}&locaion=${location}&breed=${breed}`
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
     const json = await res.json();
     setPets(json.pets);
   }
+
   return (
     <div className="search-params">
       <form
@@ -82,7 +83,7 @@ const SearchParams = () => {
         </label>
         <button>Submit</button>
       </form>
-      <Results pets={pets} />;
+      <Results pets={pets} />
     </div>
   );
 };
