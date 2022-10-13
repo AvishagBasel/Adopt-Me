@@ -49,8 +49,3 @@ const WrappedDetails = () => {
 };
 
 export default WrappedDetails;
-
-// const Details = () => {
-//   const { id } = useParams();
-//   return <h2>{id}</h2>;
-// };
